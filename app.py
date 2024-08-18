@@ -1,29 +1,43 @@
 import streamlit as st
 
-# Configure the app layout
-st.set_page_config(page_title="Medical Application", layout="wide")
+# Initialize session state variables
+if 'page' not in st.session_state:
+    st.session_state.page = 1
 
-# Create two columns for the pages
-col1, col2 = st.columns(2)
+# Function to validate the first page
+def validate_patient_details():
+    if all([
+        st.session_state.uhid,
+        st.session_state.name,
+        st.session_state.height > 0,
+        st.session_state.weight > 0,
+        st.session_state.age > 0,
+        st.session_state.gender,
+        st.session_state.present_complaints
+    ]):
+        st.session_state.page = 2
+    else:
+        st.warning("Please fill out all patient details before proceeding.")
 
-# First page: Patient Details
-with col1:
+# First Page: Patient Details
+if st.session_state.page == 1:
     st.subheader("Patient Details")
-    
-    # Patient details form
-    uhid = st.text_input("UHID")
-    name = st.text_input("Name")
-    height = st.number_input("Height (cm)", min_value=0)
-    weight = st.number_input("Weight (kg)", min_value=0)
-    age = st.number_input("Age", min_value=0)
-    gender = st.selectbox("Gender", ["Male", "Female", "Other"])
-    present_complaints = st.text_area("Present Complaints")
 
-# Second page: RIVE Factors
-with col2:
+    st.session_state.uhid = st.text_input("UHID")
+    st.session_state.name = st.text_input("Name")
+    st.session_state.height = st.number_input("Height (cm)", min_value=0)
+    st.session_state.weight = st.number_input("Weight (kg)", min_value=0)
+    st.session_state.age = st.number_input("Age", min_value=0)
+    st.session_state.gender = st.selectbox("Gender", ["Male", "Female", "Other"])
+    st.session_state.present_complaints = st.text_area("Present Complaints")
+
+    if st.button("Next"):
+        validate_patient_details()
+
+# Second Page: RIVE Factors
+if st.session_state.page == 2:
     st.subheader("RIVE Factors")
-    
-    # RIVE factors form with input boxes
+
     rf1 = st.text_input("RF1")
     rf2 = st.text_input("RF2")
     rf3 = st.text_input("RF3")
