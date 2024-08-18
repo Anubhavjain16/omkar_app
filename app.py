@@ -16,7 +16,7 @@ with col1:
     height = st.number_input("Height (cm)", min_value=0)
     weight = st.number_input("Weight (kg)", min_value=0)
     age = st.number_input("Age", min_value=0)
-    gender = st.selectbox("Gender", ["Male", Female", "Other"])
+    gender = st.selectbox("Gender", ["Male", "Female", "Other"])
     present_complaints = st.text_area("Present Complaints")
 
 # Second page: RIVE Factors
