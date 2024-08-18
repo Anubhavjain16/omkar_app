@@ -12,15 +12,15 @@ def validate_patient_details():
         st.session_state.height > 0,
         st.session_state.weight > 0,
         st.session_state.age > 0,
-        st.session_state.gender,
-        st.session_state.present_complaints
+        st.session_state.gender
     ]):
         st.session_state.page = 2
     else:
-        st.warning("Please fill out all patient details before proceeding.")
+        st.warning("Please fill out all required patient details before proceeding.")
 
 # First Page: Patient Details
 if st.session_state.page == 1:
+    st.title("Medical Application")
     st.subheader("Patient Details")
 
     st.session_state.uhid = st.text_input("UHID")
@@ -29,13 +29,14 @@ if st.session_state.page == 1:
     st.session_state.weight = st.number_input("Weight (kg)", min_value=0)
     st.session_state.age = st.number_input("Age", min_value=0)
     st.session_state.gender = st.selectbox("Gender", ["Male", "Female", "Other"])
-    st.session_state.present_complaints = st.text_area("Present Complaints")
+    st.session_state.present_complaints = st.text_area("Patient Complaints (optional)")
 
     if st.button("Next"):
         validate_patient_details()
 
 # Second Page: RIVE Factors
-if st.session_state.page == 2:
+elif st.session_state.page == 2:
+    st.title("Medical Application")
     st.subheader("RIVE Factors")
 
     rf1 = st.text_input("RF1")
